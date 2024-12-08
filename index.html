@@ -285,48 +285,34 @@
     <script src="js/script.js"></script>
     <script>
         document.getElementById('contactForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // منع الإرسال التقليدي للنموذج
+            event.preventDefault(); 
 
-            // تأكيد أن JavaScript يعمل
-            console.log('Form submitted');
+            console.log('Kolo Tamam');
 
-            // التحقق من الحقول
             if (!document.getElementById('name').value || !document.getElementById('email').value || !document.getElementById('msg').value) {
                 alert("Please fill all the fields");
                 return;
             }
 
-            // إرسال البيانات عبر AJAX
             fetch(this.action, {
                 method: 'POST',
                 body: new FormData(this),
             })
-            .then(response => response.json()) // تحويل الاستجابة إلى JSON
+            .then(response => response.json()) 
             .then(data => {
-                console.log('Response from PHP:', data); // طباعة الاستجابة
-
-                // عرض رسالة النجاح دائمًا، حتى في حالة حدوث خطأ
-                document.getElementById('message-sent').style.display = "flex";  // عرض رسالة النجاح
-
-                // إخفاء رسالة الخطأ إذا كانت موجودة
+                console.log('Response from PHP:', data); 
+                document.getElementById('message-sent').style.display = "flex"; 
                 document.getElementById('message-error').style.display = "none";
-
-                // إعادة تعيين النموذج إذا تم إرسال الرسالة بنجاح
                 if (data.success) {
                     document.getElementById('contactForm').reset();
                 } else {
-                    // في حالة حدوث خطأ
-                    document.getElementById('message-error').style.display = "flex";
+                    document.getElementById('message-error').style.display = "block";
                    
                 }
             })
             .catch(error => {
-                // في حالة حدوث خطأ في الـAJAX
-                console.error('Error:', error);  // في حالة حدوث خطأ
-                document.getElementById('message-sent').style.display = "block";  // عرض رسالة النجاح رغم الخطأ
-                
-
-                // إخفاء رسالة الخطأ إذا كانت موجودة
+                console.error('Error:', error);
+                document.getElementById('message-sent').style.display = "block"; 
                 document.getElementById('message-error').style.display = "none";
             });
         });
